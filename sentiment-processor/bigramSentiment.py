@@ -49,7 +49,7 @@ class BigramSentiment(SentimentModel):
                         self.sentimentD[one][word1][word2] += 1
         
         
-    def probabilities(self, songText):
+    def probabilities(self, text):
         """
         Requires: Nothing
         Modifies: self.probabilityD, a 3D dictionary whose innermost 
@@ -85,8 +85,8 @@ class BigramSentiment(SentimentModel):
                 self.probabilityD[word1][word2][zero] = zeroProbability
                 self.probabilityD[word1][word2][one] = oneProbability
        
-        songZeroProb = 0
-        songOneProb = 0
+        zeroProb = 0
+        oneProb = 0
         
         for string in songText:
             lyricList = string.split()
@@ -96,20 +96,20 @@ class BigramSentiment(SentimentModel):
                 if word1 in self.probabilityD:
                     if word2 in self.probabilityD[word1]:
                         if self.probabilityD[word1][word2][zero] > 0 and self.probabilityD[word1][word2][zero] < 1:
-                            songZeroProb += log(self.probabilityD[word1][word2][zero])
-                            songOneProb += log(self.probabilityD[word1][word2][one])
+                            zeroProb += log(self.probabilityD[word1][word2][zero])
+                            oneProb += log(self.probabilityD[word1][word2][one])
                         elif self.probabilityD[word1][word2][zero] == 0:
-                            songZeroProb += 0
-                            songOneProb += 1
+                            zeroProb += 0
+                            oneProb += 1
                         else:
-                            songOneProb += 0
-                            songZeroProb += 1
+                            oneProb += 0
+                            zeroProb += 1
                     else:
-                        songOneProb += 0
-                        songZeroProb += 0
+                        oneProb += 0
+                        zeroProb += 0
                 else:
-                    songOneProb += 0
-                    songZeroProb += 0
+                    oneProb += 0
+                    zeroProb += 0
                 
-        prob = {'zero': songZeroProb, 'one': songOneProb}
+        prob = {'zero': zeroProb, 'one': oneProb}
         return prob
