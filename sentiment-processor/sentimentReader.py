@@ -33,8 +33,8 @@ class SentimentReader(object):
         bProb = self.bigramS.probabilities(file)
         tProb = self.trigramS.probabilities(file)
         
-        songZeroProb = 0
-        songOneProb = 0
+        zeroProb = 0
+        oneProb = 0
         
         probs = []
         probs.append(uProb)
@@ -44,27 +44,27 @@ class SentimentReader(object):
         for item in probs:
             for key in item:
                 if key == 'zero':
-                    songZeroProb += item[key]
+                    zeroProb += item[key]
                 else:
-                    songOneProb += item[key]
+                    oneProb += item[key]
                     
-        if songZeroProb > songOneProb:
+        if zeroProb > oneProb:
             return "Using tweet data, the SenTAYments say this song has negative sentiment."
-        elif songZeroProb < songOneProb:
+        elif zeroProb < oneProb:
             return "Using tweet data, the SenTAYments say this song has positive sentiment."
-        elif songZeroProb == songOneProb:
+        elif zeroProb == oneProb:
             return "Using tweet data, the SenTAYments say this song is neutral."
         else:
             return "An error occurred. Sentiment test inconclusive."
 
-    def read(self, song):
+    def read(self, text):
         """
         Takes a file name and makes a list of full sentence strings of all the words that appear in that
         song file. Clears self.sentData into an empty list at the end
         """
         
         downL = DataLoader()
-        downL.loadMusicSentiment(song)
+        downL.loadMusicSentiment(text)
         song = downL.sentData
         downL.clearSentData()
         return song
