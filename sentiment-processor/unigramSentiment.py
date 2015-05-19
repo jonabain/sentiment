@@ -55,7 +55,7 @@ class UnigramSentiment(SentimentModel):
         downL.clearSentData()
         return prob
         
-    def probabilities(self, songText):
+    def probabilities(self, text):
         """
         Requires: Nothing
         Modifies: self.probabilitysD, a 2D dictionary whose innermost
@@ -85,27 +85,27 @@ class UnigramSentiment(SentimentModel):
                 self.probabilityD[word][zero] = zeroProbability
                 self.probabilityD[word][one] = oneProbability
         
-        songZeroProb = 0
-        songOneProb = 0
+        zeroProb = 0
+        oneProb = 0
         
-        for string in songText:
+        for string in text:
             lyricList = string.split()
             listLength = len(lyricList) - 1
             for number in range(listLength):
                 word = lyricList[number]
                 if word in self.probabilityD:
                     if self.probabilityD[word][zero] > 0 and self.probabilityD[word][zero] < 1:
-                        songZeroProb += log(self.probabilityD[word][zero])
-                        songOneProb += log(self.probabilityD[word][one])
+                        zeroProb += log(self.probabilityD[word][zero])
+                        oneProb += log(self.probabilityD[word][one])
                     elif self.probabilityD[word][zero] == 0:
-                        songZeroProb += 0
-                        songOneProb += 1
+                        zeroProb += 0
+                        oneProb += 1
                     else:
-                        songOneProb += 0
-                        songZeroProb += 1
+                        oneProb += 0
+                        zeroProb += 1
                 else:
-                    songOneProb += 0
-                    songZeroProb += 0
+                    oneProb += 0
+                    zeroProb += 0
                 
-        prob = {'zero': songZeroProb, 'one': songOneProb}
+        prob = {'zero': zeroProb, 'one': oneProb}
         return prob
