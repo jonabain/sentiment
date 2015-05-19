@@ -16,18 +16,11 @@ def main():
     welcomeMessage()
     
     #loads all music, tweet, and review sentiments 
-    SOURCEDIR = ["taylor_swift"]
     SOURCEDIRECTORY = ["Tweets"]
-    for dir in SOURCEDIR:
-        dl = DataLoader()
-        dl.loadMusic(dir)
-    print '\n', "* All Taylor Swift Music Has Been Loaded *", '\n'
     for dir in SOURCEDIRECTORY:
         download = DataLoader()
         download.loadTweets(dir)
     print "* All Twitter Sentiments Have Been Loaded. *", '\n'
-    download.loadMovieData("Reviews")
-    print "* All Movie Review Sentiments Have Been Loaded. *", '\n'
     
     #gives code for the 3 options the menu prompts users to choose from 
     done = False
@@ -51,60 +44,8 @@ def main():
             print movieSentimentStr, '\n'
             done == False
         #generates a new TaySwift song   
-        elif choice in ['2']:
-            movieSentiment.trainSentiment(download.posMovieData, download.negMovieData)
-            sentimentModel.trainSentiment(download.tweetData)
-            unigram = UnigramModel()
-            unigram.trainText(dl.data)
-            bigram = BigramModel()
-            bigram.trainText(dl.data)
-            trigram = TrigramModel()
-            trigram.trainText(dl.data)
-            models = [trigram, bigram, unigram]
-            chorus = []
-            verse1 = []
-            verse2 = []
-            verse3 = []
-            songParts = []
-            songParts.append(verse1)
-            songParts.append(chorus)
-            songParts.append(verse2)
-            songParts.append(verse3)
-            songFile = open("newTaySong.txt", 'w')
-            for i in range(4):
-                for j in range(4):
-                    newSentence = generateSentence(models, 8)
-                    songFile.write(newSentence)
-                    songFile.write('\n')
-                    songParts[i].append(newSentence)
-            songFile.close()
-            print 'The SenTAYments original song for you is:', '\n'
-            for sentence in songParts[1]:
-                print '    ', sentence
-            print '\n'
-            for sentence in songParts[0]:
-                print '    ', sentence
-            print '\n'
-            for sentence in songParts[2]:
-                print '    ', sentence
-            print '\n'
-            for sentence in songParts[0]:
-                print '    ', sentence
-            print '\n'
-            for sentence in songParts[3]:
-                print '    ', sentence
-            print '\n' 
-            for sentence in songParts[0]:
-                print '    ', sentence
-            print '\n'
-            sentimentStr = readForEmotion(sentimentModel, "newTaySong.txt")
-            movieSentimentStr = readMovieForEmotion(movieSentiment, "newTaySong.txt")
-            
-            print sentimentStr, '\n'
-            print movieSentimentStr, '\n'
-            done = False
         #quits program if user selects option 3   
-        elif choice in ['3']:
+        elif choice in ['2']:
             printBye()
             done = True
         else:
@@ -116,16 +57,15 @@ def welcomeMessage():
     
 
 def printMenu():
-    print '\n', '***************SenTAYment Menu Options***************'
-    print '1) Enter 1 to analyze a TaySwift song.'
-    print '2) Enter 2 to generate your own TaySwift song.'
-    print '3) Enter 3 to exit.'
+    print '\n', '***************Menu Options***************'
+    print '1) Enter 1 to analyze a directory.'
+    print '2) Enter 2 to exit.'
     
-    choice = raw_input('Your choice (1, 2 or 3): ')
-    if choice in ['1', '2', '3']:
+    choice = raw_input('Your choice (1, or 2): ')
+    if choice in ['1', '2']:
         return choice
     else:
-        print 'Invalid entry! The SenTAYments only except 1, 2 or 3!'
+        print 'Invalid entry! Only except 1 or 2.'
         return '5'
 #if user selects option 1, this prompts them to choose which song they want to analyze 
 def readTaySong():
