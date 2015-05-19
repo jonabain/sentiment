@@ -3,23 +3,9 @@ from sentimentModel import *
 class BigramSentiment(SentimentModel):
 
     def __init__(self):
-        """
-        This is the constructor.
-        """
         super(BigramSentiment, self).__init__()
 
     def trainSentiment(self, sentiments):
-        """
-        Requires: sentiments are the positive and negative sentiments 
-            to train on, a list of full-sentence strings beginning with 
-            0 or 1
-        Modifies: self.sentimentD[zero] and self.sentimentD[one],
-            which are themselves 2D dictionaries with '0' or '1' as 
-            the first keys that ultimately contain word: frequency 
-            pairs. This serves to count frequencies of positive- and 
-            negative- sentiment words.
-        Effects: nothing
-        """
         zero = '0'
         one = '1'
         
@@ -50,14 +36,6 @@ class BigramSentiment(SentimentModel):
         
         
     def probabilities(self, text):
-        """
-        Requires: Nothing
-        Modifies: self.probabilityD, a 3D dictionary whose innermost 
-            dictionaries that are words with the keys '0' and '1' 
-            and values that are probabilities. 
-        Effects: returns a sentiment string of positive or negative
-            probabilities
-        """
         zero = '0'
         one = '1'
 
