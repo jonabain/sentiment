@@ -3,11 +3,7 @@ sys.path.append('./lm')
 sys.path.append('./Reach')
 
 from dataLoader import *
-from unigramModel import *
-from bigramModel import *
-from trigramModel import *
 from sentimentReader import *
-from movieSentiment import *
 
 def main():
     sentimentModel = SentimentReader()
