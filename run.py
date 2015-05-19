@@ -55,7 +55,6 @@ def main():
 def welcomeMessage():
     print 'Welcome.'
     
-
 def printMenu():
     print '\n', '***************Menu Options***************'
     print '1) Enter 1 to analyze a directory.'
@@ -98,54 +97,14 @@ def printBye():
 def readForEmotion(model, song):
      sentimentStr = model.readSentiment(song)
      return sentimentStr
-
-def readMovieForEmotion(model, file):
-    sentimentStr = model.readSentiment(file)
-    return sentimentStr
-    
-#generates the sentences in order to create a new song 
-def generateSentence(models, length):
-    sentence = ["^::^", "^:::^"]
-    while not(over(length, len(sentence))) and sentence[-1] != "$:::$" :
-        sentence.append(backOff(models, sentence).nextToken(sentence))
-    #removes the unwanted beginning and end strings	    
-    while '^::^' in sentence:
-        sentence.remove('^::^')
-    while '^:::^' in sentence:
-        sentence.remove('^:::^')
-    while '$:::$' in sentence:
-        sentence.remove('$:::$')
-    #capitalizes the first word
-    if len(sentence) > 0:
-        sentence[0] = sentence[0].capitalize()
-    return ' '.join(sentence)
-
-#selects the best (first) possible model that can be used.
-def backOff(models, sentence):
-
-    if models[0].hasKey(sentence) == True:
-        return models[0]
-    elif models[1].hasKey(sentence) == True:
-        return models[1]
-    elif models[2].hasKey(sentence) == True:
-    	return models[2]
-    else:
-        return None
-        
-#returns a boolean of whether or not to end the sentence based solely on length.  
-def over(maxLength, currentLength):
-    STDEV = 1 
-    val = random.gauss(currentLength, STDEV)
-    return val > maxLength
     
 def populateCommonWords(instance, F):
     F = open(F, 'r')
     words = F.readlines()
     instance.commonWords = words
 
-def populate(unigramSentiment, movieSentiment):
+def populate(unigramSentiment):
     populateCommonWords(unigramSentiment, 'commonwords.txt')
-    populateCommonWords(movieSentiment, 'commonwords.txt')
     
 if __name__=='__main__':
     main()
